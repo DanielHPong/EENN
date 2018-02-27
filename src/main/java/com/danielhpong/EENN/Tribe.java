@@ -64,7 +64,7 @@ public class Tribe {
                 break;
             case 7: // BREED
                 Tribe child = createChild();
-                App.tribes.add(child);
+                map[x][y].tribes.add(child);
                 this.food = this.food / 2;
                 System.out.print("B - " + age + " - ");
                 System.out.println(String.valueOf(x) + ", " + String.valueOf(y) + " : " + String.valueOf(food));

@@ -11,13 +11,20 @@ public class Cell {
     public Cell(Random rand) {
         food = rand.nextInt(50);
     }
-    
+
     public void tick() {
         if (food < 99) {
             food++;
         }
-        for (Tribe tribe : tribes) {
-            tribe.tick(App.map);
+        for (int i = 0; i < tribes.size(); i++) {
+            Tribe tribe = tribes.get(i);
+            if (tribe.food <= 0) {
+                tribes.remove(i);
+            } else if (tribe.age >= 200) {
+                tribes.remove(i);
+            } else {
+                tribe.tick(App.map);
+            }
         }
     }
 
