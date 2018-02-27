@@ -12,13 +12,13 @@ public class App {
     static Random rand = new Random();
     static ArrayList<Double> sigTable = generateSigTable();
     public static Cell[][] map = initializeMap();
-    static int tribes = 0;
+    static int entities = 0;
     static int time = 0;
 
     public static void main( String[] args ) {
         while (true) {
-            if (tribes < 20) {
-                map[rand.nextInt(128)][rand.nextInt(128)].tribes.add(new Tribe(sigTable));
+            if (entities < 20 && time < 400) {
+                map[rand.nextInt(128)][rand.nextInt(128)].entity.add(new Entity(sigTable));
             }
             tickMap();
             try {
@@ -28,7 +28,7 @@ public class App {
             }
             time++;
             System.out.println(" ");
-            System.out.println(String.valueOf(time) + " : " + String.valueOf(tribes));
+            System.out.println(String.valueOf(time) + " : " + String.valueOf(entities));
         }
     }
 

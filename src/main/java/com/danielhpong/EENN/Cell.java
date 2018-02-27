@@ -6,7 +6,7 @@ import java.util.Random;
 public class Cell {
 
     int food;
-    ArrayList<Tribe> tribes = new ArrayList<Tribe>();
+    ArrayList<Entity> entity = new ArrayList<Entity>();
 
     public Cell(Random rand) {
         food = rand.nextInt(50);
@@ -16,14 +16,16 @@ public class Cell {
         if (food < 99) {
             food++;
         }
-        for (int i = 0; i < tribes.size(); i++) {
-            Tribe tribe = tribes.get(i);
-            if (tribe.food <= 0) {
-                tribes.remove(i);
-            } else if (tribe.age >= 200) {
-                tribes.remove(i);
+        for (int i = 0; i < entity.size(); i++) {
+            Entity cellentity = entity.get(i);
+            if (cellentity.food <= 0) {
+                App.entities--;
+                entity.remove(i);
+            } else if (cellentity.age >= 200) {
+                App.entities--;
+                entity.remove(i);
             } else {
-                tribe.tick(App.map);
+                cellentity.tick(App.map);
             }
         }
     }

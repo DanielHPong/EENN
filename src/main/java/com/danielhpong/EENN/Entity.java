@@ -3,7 +3,7 @@ package com.danielhpong.EENN;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Tribe {
+public class Entity {
 
     Random rand = new Random();
     NeuralNet net;
@@ -11,7 +11,8 @@ public class Tribe {
     int food = 100;
     int age = 0;
 
-    public Tribe(ArrayList<Double> sigTable) {
+    public Entity(ArrayList<Double> sigTable) {
+        App.entities++;
         net = new NeuralNet(sigTable);
         x = rand.nextInt(128);
         y = rand.nextInt(128);
@@ -20,7 +21,16 @@ public class Tribe {
     public void tick(Cell[][] map) {
         food = food-5;
         age++;
-        int decision = net.run(x, y, food, map[x][y].food);
+        int nfood = 0;
+        int sfood = 0;
+        int efood = 0;
+        int wfood = 0;
+        if (y < 127) {nfood = map[x][y+1].food;}
+        if (y > 0) {sfood = map[x][y-1].food;}
+        if (x < 127) {efood = map[x+1][y].food;}
+        if (x > 0) {wfood = map[x-1][y].food;}
+        int decision = net.run(x, y, food, map[x][y].food, 
+                nfood, efood, sfood, wfood);
         switch (decision) {
             case 1: // GO NORTH
                 System.out.print("N - " + age + " - ");
@@ -63,8 +73,8 @@ public class Tribe {
                 System.out.println(String.valueOf(x) + ", " + String.valueOf(y) + " : " + String.valueOf(food));
                 break;
             case 7: // BREED
-                Tribe child = createChild();
-                map[x][y].tribes.add(child);
+                Entity child = createChild();
+                map[x][y].entity.add(child);
                 this.food = this.food / 2;
                 System.out.print("B - " + age + " - ");
                 System.out.println(String.valueOf(x) + ", " + String.valueOf(y) + " : " + String.valueOf(food));
@@ -76,8 +86,8 @@ public class Tribe {
         }
     }
     
-    private Tribe createChild() {
-        Tribe child = new Tribe(App.sigTable);
+    private Entity createChild() {
+        Entity child = new Entity(App.sigTable);
         child.net = this.net;
         child.food = this.food / 2;
         child.x = this.x;
