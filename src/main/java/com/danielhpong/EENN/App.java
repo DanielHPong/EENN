@@ -17,7 +17,7 @@ public class App {
 
     public static void main( String[] args ) {
         while (true) {
-            if (entities < 20 && time < 400) {
+            if (entities < 20 && time < 2000) {
                 map[rand.nextInt(128)][rand.nextInt(128)].entity.add(new Entity(sigTable));
             }
             tickMap();

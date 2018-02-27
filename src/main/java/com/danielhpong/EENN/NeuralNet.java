@@ -8,9 +8,9 @@ public class NeuralNet {
     Random rand = new Random();
     ArrayList<Double> sig;
     NeuralNode[] nodes1 = new NeuralNode[8];
-    NeuralNode[] nodes2 = new NeuralNode[10];
-    NeuralNode[] nodes3 = new NeuralNode[10];
-    NeuralNode[] nodes4 = new NeuralNode[10];
+    NeuralNode[] nodes2 = new NeuralNode[8];
+    NeuralNode[] nodes3 = new NeuralNode[8];
+    NeuralNode[] nodes4 = new NeuralNode[7];
     NeuralNode[] nodes5 = new NeuralNode[7];
 
     public NeuralNet(ArrayList<Double> sigTable) {
@@ -18,13 +18,13 @@ public class NeuralNet {
         for (int i = 0; i < 8; i++) {
             nodes1[i] = new NeuralNode(sig, 0, new NeuralNode[0]);
         }
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 8; i++) {
             nodes2[i] = new NeuralNode(sig, 0, nodes1);
         }
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 8; i++) {
             nodes3[i] = new NeuralNode(sig, 0, nodes2);
         }
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 7; i++) {
             nodes4[i] = new NeuralNode(sig, 0, nodes3);
         }
         for (int i = 0; i < 7; i++) {

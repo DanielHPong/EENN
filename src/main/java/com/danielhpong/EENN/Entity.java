@@ -74,7 +74,11 @@ public class Entity {
                 break;
             case 7: // BREED
                 Entity child = createChild();
-                map[x][y].entity.add(child);
+                int childx = x+1;
+                int childy = y+1;
+                if (childx > 127) {childx = 126;}
+                if (childy > 127) {childy = 126;}
+                map[childx][childy].entity.add(child);
                 this.food = this.food / 2;
                 System.out.print("B - " + age + " - ");
                 System.out.println(String.valueOf(x) + ", " + String.valueOf(y) + " : " + String.valueOf(food));
