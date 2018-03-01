@@ -21,9 +21,11 @@ public class Cell {
             if (cellentity.food <= 0) {
                 App.entities--;
                 entity.remove(i);
+                food+=20;
             } else if (cellentity.age >= 200) {
                 App.entities--;
                 entity.remove(i);
+                food+=20;
             } else {
                 cellentity.tick(App.map);
             }

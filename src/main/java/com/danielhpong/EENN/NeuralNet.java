@@ -7,7 +7,7 @@ public class NeuralNet {
 
     int INPUT_SIZE = 8;
     int OUTPUT_SIZE = 7;
-    int HIDDEN_LAYER_DEPTH = 10;
+    int HIDDEN_LAYER_DEPTH = 14;
     int HIDDEN_LAYER_WIDTH = 7;
     Random rand = new Random();
     ArrayList<Double> sig;
