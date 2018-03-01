@@ -14,7 +14,7 @@ public class Cell {
 
     public void tick() {
         if (food < 99) {
-            food++;
+            food = food+2;
         }
         for (int i = 0; i < entity.size(); i++) {
             Entity cellentity = entity.get(i);

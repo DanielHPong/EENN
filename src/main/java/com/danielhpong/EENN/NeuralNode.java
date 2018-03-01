@@ -13,12 +13,12 @@ public class NeuralNode {
     double bias;
     double value;
     
-    public NeuralNode(ArrayList<Double> sigTable, NeuralNode[] children) {
+    public NeuralNode(ArrayList<Double> sigTable, NeuralNode[] children, int LAYER_WIDTH) {
         sig = sigTable;
         this.children = children;
         weights = new double[children.length];
         for (int i = 0; i < weights.length; i++) {
-            weights[i] = (rand.nextDouble()-0.5)*10;
+            weights[i] = (rand.nextDouble()-0.5)*(64/LAYER_WIDTH);
         }
         bias = rand.nextDouble();
     }

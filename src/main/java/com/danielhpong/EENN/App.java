@@ -18,12 +18,12 @@ public class App {
 
     public static void main( String[] args ) throws IOException {
         while (true) {
-            if (entities < 20 && time < 2000) {
+            if (entities < 10) {
                 map[rand.nextInt(128)][rand.nextInt(128)].entity.add(new Entity(sigTable));
             }
             tickMap();
             try {
-                Thread.sleep(200);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

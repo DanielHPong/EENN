@@ -61,9 +61,9 @@ public class Entity {
                 }
                 break;
             case 5: // FARM
-                if (App.map[x][y].food >= 10) {
-                    App.map[x][y].food -= 10;
-                    food += 10;
+                if (App.map[x][y].food >= 15) {
+                    App.map[x][y].food -= 15;
+                    food += 15;
                 }
                 System.out.print("F - " + age + " - ");
                 System.out.println(String.valueOf(x) + ", " + String.valueOf(y) + " : " + String.valueOf(food));

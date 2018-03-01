@@ -5,6 +5,8 @@ import java.util.Random;
 
 public class NeuralNet {
 
+    int INPUT_SIZE = 8;
+    int OUTPUT_SIZE = 7;
     int HIDDEN_LAYER_DEPTH = 10;
     int HIDDEN_LAYER_WIDTH = 7;
     Random rand = new Random();
@@ -13,21 +15,21 @@ public class NeuralNet {
 
     public NeuralNet(ArrayList<Double> sigTable) {
         sig = sigTable;
-        NeuralNode[] input = new NeuralNode[8];
+        NeuralNode[] input = new NeuralNode[INPUT_SIZE];
         for (int i = 0; i < input.length; i++) {
-            input[i] = new NeuralNode(sig, new NeuralNode[0]);
+            input[i] = new NeuralNode(sig, new NeuralNode[0], INPUT_SIZE);
         }
         layers[0] = input;
         for (int i = 1; i <= HIDDEN_LAYER_DEPTH; i++) {
             NeuralNode[] hidden = new NeuralNode[HIDDEN_LAYER_WIDTH];
             for (int j = 0; j < HIDDEN_LAYER_WIDTH; j++) {
-                hidden[j] = new NeuralNode(sig, layers[i-1]);
+                hidden[j] = new NeuralNode(sig, layers[i-1], HIDDEN_LAYER_WIDTH);
             }
             layers[i] = hidden;
         }
-        NeuralNode[] output = new NeuralNode[7];
+        NeuralNode[] output = new NeuralNode[OUTPUT_SIZE];
         for (int i = 0; i < output.length; i++) {
-            output[i] = new NeuralNode(sig, layers[HIDDEN_LAYER_DEPTH]);
+            output[i] = new NeuralNode(sig, layers[HIDDEN_LAYER_DEPTH], OUTPUT_SIZE);
         }
         layers[HIDDEN_LAYER_DEPTH+1] = output;
     }
@@ -56,7 +58,6 @@ public class NeuralNet {
             }
         }
         return retval+1;
-        
     }
     
 }
