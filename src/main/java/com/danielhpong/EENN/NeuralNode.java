@@ -9,14 +9,12 @@ public class NeuralNode {
     ArrayList<Double> sig;
     NeuralNode[] children;
     NeuralNode[] parents;
-    int level;
     double[] weights;
     double bias;
     double value;
     
-    public NeuralNode(ArrayList<Double> sigTable, int level, NeuralNode[] children) {
+    public NeuralNode(ArrayList<Double> sigTable, NeuralNode[] children) {
         sig = sigTable;
-        this.level = level;
         this.children = children;
         weights = new double[children.length];
         for (int i = 0; i < weights.length; i++) {

@@ -1,5 +1,6 @@
 package com.danielhpong.EENN;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -15,7 +16,7 @@ public class App {
     static int entities = 0;
     static int time = 0;
 
-    public static void main( String[] args ) {
+    public static void main( String[] args ) throws IOException {
         while (true) {
             if (entities < 20 && time < 2000) {
                 map[rand.nextInt(128)][rand.nextInt(128)].entity.add(new Entity(sigTable));

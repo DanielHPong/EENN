@@ -5,74 +5,58 @@ import java.util.Random;
 
 public class NeuralNet {
 
+    int HIDDEN_LAYER_DEPTH = 10;
+    int HIDDEN_LAYER_WIDTH = 7;
     Random rand = new Random();
     ArrayList<Double> sig;
-    NeuralNode[] nodes1 = new NeuralNode[8];
-    NeuralNode[] nodes2 = new NeuralNode[8];
-    NeuralNode[] nodes3 = new NeuralNode[8];
-    NeuralNode[] nodes4 = new NeuralNode[7];
-    NeuralNode[] nodes5 = new NeuralNode[7];
+    NeuralNode[][] layers = new NeuralNode[HIDDEN_LAYER_DEPTH+2][];
 
     public NeuralNet(ArrayList<Double> sigTable) {
         sig = sigTable;
-        for (int i = 0; i < 8; i++) {
-            nodes1[i] = new NeuralNode(sig, 0, new NeuralNode[0]);
+        NeuralNode[] input = new NeuralNode[8];
+        for (int i = 0; i < input.length; i++) {
+            input[i] = new NeuralNode(sig, new NeuralNode[0]);
         }
-        for (int i = 0; i < 8; i++) {
-            nodes2[i] = new NeuralNode(sig, 0, nodes1);
+        layers[0] = input;
+        for (int i = 1; i <= HIDDEN_LAYER_DEPTH; i++) {
+            NeuralNode[] hidden = new NeuralNode[HIDDEN_LAYER_WIDTH];
+            for (int j = 0; j < HIDDEN_LAYER_WIDTH; j++) {
+                hidden[j] = new NeuralNode(sig, layers[i-1]);
+            }
+            layers[i] = hidden;
         }
-        for (int i = 0; i < 8; i++) {
-            nodes3[i] = new NeuralNode(sig, 0, nodes2);
+        NeuralNode[] output = new NeuralNode[7];
+        for (int i = 0; i < output.length; i++) {
+            output[i] = new NeuralNode(sig, layers[HIDDEN_LAYER_DEPTH]);
         }
-        for (int i = 0; i < 7; i++) {
-            nodes4[i] = new NeuralNode(sig, 0, nodes3);
-        }
-        for (int i = 0; i < 7; i++) {
-            nodes5[i] = new NeuralNode(sig, 0, nodes4);
-        }
+        layers[HIDDEN_LAYER_DEPTH+1] = output;
     }
     
     public int run(int x, int y, int food, int cellFood, int nfood, int efood, int sfood, int wfood) {
-        nodes1[0].value = (double) x / 128;
-        nodes1[1].value = (double) y / 128;
-        nodes1[2].value = (double) food / 100;
-        nodes1[3].value = (double) cellFood / 100;
-        nodes1[4].value = (double) nfood / 100;
-        nodes1[5].value = (double) efood / 100;
-        nodes1[6].value = (double) sfood / 100;
-        nodes1[7].value = (double) wfood / 100;
-        for (int i = 0; i < nodes1.length; i++) {
-            //System.out.print(String.valueOf(nodes1[i].value) + " ");
+        
+        layers[0][0].value = (double) x / 128;
+        layers[0][1].value = (double) y / 128;
+        layers[0][2].value = (double) food / 100;
+        layers[0][3].value = (double) cellFood / 100;
+        layers[0][4].value = (double) nfood / 100;
+        layers[0][5].value = (double) efood / 100;
+        layers[0][6].value = (double) sfood / 100;
+        layers[0][7].value = (double) wfood / 100;
+        
+        for (int i = 1; i <= HIDDEN_LAYER_DEPTH+1; i++) {
+            for (int j = 0; j < layers[i].length; j++) {
+                layers[i][j].calculateValue();
+            }
         }
-        //System.out.println(" ");
-        for (int i = 0; i < nodes2.length; i++) {
-            nodes2[i].calculateValue();
-            //System.out.print(String.valueOf(nodes2[i].value) + " ");
-        }
-        //System.out.println(" ");
-        for (int i = 0; i < nodes3.length; i++) {
-            nodes3[i].calculateValue();
-            //System.out.print(String.valueOf(nodes3[i].value) + " ");
-        }
-        //System.out.println(" ");
-        for (int i = 0; i < nodes4.length; i++) {
-            nodes4[i].calculateValue();
-            //System.out.print(String.valueOf(nodes4[i].value) + " ");
-        }
-        for (int i = 0; i < nodes5.length; i++) {
-            nodes5[i].calculateValue();
-            //System.out.print(String.valueOf(nodes4[i].value) + " ");
-        }
-        //System.out.println(" ");
-        //System.out.println(" ");
-
+        
         int retval = 0;
-        for (int i = 0; i < nodes5.length; i++) {
-            if (nodes5[retval].value < nodes5[i].value) {
+        for (int i = 0; i < layers[HIDDEN_LAYER_DEPTH+1].length; i++) {
+            if (layers[HIDDEN_LAYER_DEPTH+1][retval].value < layers[HIDDEN_LAYER_DEPTH+1][i].value) {
                 retval = i;
             }
         }
         return retval+1;
+        
     }
     
 }
