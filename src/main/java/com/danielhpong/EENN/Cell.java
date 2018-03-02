@@ -14,7 +14,7 @@ public class Cell {
 
     public void tick() {
         if (food < 99) {
-            food = food+2;
+            food = food+3;
         }
         for (int i = 0; i < entity.size(); i++) {
             Entity cellentity = entity.get(i);
@@ -27,7 +27,7 @@ public class Cell {
                 entity.remove(i);
                 food+=20;
             } else {
-                cellentity.tick(App.map);
+                cellentity.tick();
             }
         }
     }

@@ -15,11 +15,12 @@ public class App {
     public static Cell[][] map = initializeMap();
     static int entities = 0;
     static int time = 0;
+    static int geneology = 0;
 
     public static void main( String[] args ) throws IOException {
         while (true) {
-            if (entities < 10) {
-                map[rand.nextInt(128)][rand.nextInt(128)].entity.add(new Entity(sigTable));
+            if (entities < 200) {
+                map[rand.nextInt(128)][rand.nextInt(128)].entity.add(new Entity(sigTable, geneology++));
             }
             tickMap();
             try {

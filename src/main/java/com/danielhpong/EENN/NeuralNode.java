@@ -20,7 +20,7 @@ public class NeuralNode {
         for (int i = 0; i < weights.length; i++) {
             weights[i] = (rand.nextDouble()-0.5)*(64/LAYER_WIDTH);
         }
-        bias = rand.nextDouble();
+        bias = rand.nextDouble()*LAYER_WIDTH;
     }
     
     public void calculateValue() {
@@ -38,9 +38,9 @@ public class NeuralNode {
         int high = (int) Math.ceil(x);
         if (high == low) {
             return sig.get((int) x);
-        } else if (x > 128) {
+        } else if (high >= 128) {
             return 1.0;
-        } else if (x < 0) {
+        } else if (low < 0) {
             return 0.0;
         } else {
             return sig.get(low)
