@@ -3,6 +3,8 @@ package com.danielhpong.EENN;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.danielhpong.EENN.Entity.FoodDirectionObject;
+
 public class NeuralNet {
 
     Random rand = new Random();
@@ -58,16 +60,21 @@ public class NeuralNet {
         }
     }
     
-    public int run(int x, int y, int food, int cellFood, int nfood, int efood, int sfood, int wfood) {
+    public int run(int x, int y, int food, int cellFood, 
+            FoodDirectionObject nfood, FoodDirectionObject efood, FoodDirectionObject sfood, FoodDirectionObject wfood) {
         
         layers[0][0].value = (double) x / 128;
         layers[0][1].value = (double) y / 128;
         layers[0][2].value = (double) food / 100;
         layers[0][3].value = (double) cellFood / 100;
-        layers[0][4].value = (double) nfood / 100;
-        layers[0][5].value = (double) efood / 100;
-        layers[0][6].value = (double) sfood / 100;
-        layers[0][7].value = (double) wfood / 100;
+        //layers[0][4].value = (double) nfood.food / (nfood.cells*100);
+        //layers[0][5].value = (double) efood.food / (efood.cells*100);
+        //layers[0][6].value = (double) sfood.food / (sfood.cells*100);
+        //layers[0][7].value = (double) wfood.food / (wfood.cells*100);
+        layers[0][4].value = (double) nfood.food / (15*100);
+        layers[0][5].value = (double) efood.food / (15*100);
+        layers[0][6].value = (double) sfood.food / (15*100);
+        layers[0][7].value = (double) wfood.food / (15*100);
         
         for (int i = 1; i <= HIDDEN_LAYER_DEPTH+1; i++) {
             for (int j = 0; j < layers[i].length; j++) {

@@ -16,10 +16,17 @@ public class App {
     static int entities = 0;
     static int time = 0;
     static int geneology = 0;
+    //public static Entity bestEntity = new Entity(sigTable, geneology++);
 
     public static void main( String[] args ) throws IOException {
         while (true) {
-            if (entities < 200) {
+            while (entities < 15) {
+                /*if (bestEntity.geneology != 0) {
+                    bestEntity.reproduce(-1);
+                    map[rand.nextInt(128)][rand.nextInt(128)].entity.add(new Entity(sigTable, geneology++));
+                } else {
+                    map[rand.nextInt(128)][rand.nextInt(128)].entity.add(new Entity(sigTable, geneology++));
+                }*/
                 map[rand.nextInt(128)][rand.nextInt(128)].entity.add(new Entity(sigTable, geneology++));
             }
             tickMap();

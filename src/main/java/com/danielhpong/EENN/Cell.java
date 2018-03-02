@@ -18,6 +18,9 @@ public class Cell {
         }
         for (int i = 0; i < entity.size(); i++) {
             Entity cellentity = entity.get(i);
+            //if (cellentity.generation > App.bestEntity.generation && cellentity.age > App.bestEntity.age) {
+                //App.bestEntity = cellentity;
+            //}
             if (cellentity.food <= 0) {
                 App.entities--;
                 entity.remove(i);
