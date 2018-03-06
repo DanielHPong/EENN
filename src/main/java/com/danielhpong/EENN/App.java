@@ -30,8 +30,32 @@ public class App {
                     App.entities.add(new Entity(new NeuralNet(sigTable, "1")));
                 }
             }*/
-            if (time < 1000) {
+            if (time < 500) {
                 App.entities.add(new Entity(new NeuralNet(sigTable, "1")));
+            } else if (time < 1000 && entityCount < 40) {
+                if (bestEntity != null) {
+                    if (rand.nextInt(2) == 0) {
+                        App.entities.add(new Entity(bestEntity.net));
+                    } else {
+                        App.entities.add(new Entity(new NeuralNet(sigTable, "1")));
+                    }
+                } else {
+                    App.entities.add(new Entity(new NeuralNet(sigTable, "1")));
+                }
+            } else if (time < 2000 && entityCount < 20) {
+                App.entities.add(new Entity(bestEntity.net));
+            }
+            if (time % 500 == 0) {
+                App.entities.add(new Entity(bestEntity.net));
+                App.entities.add(new Entity(bestEntity.net));
+                App.entities.add(new Entity(bestEntity.net));
+                App.entities.add(new Entity(bestEntity.net));
+                App.entities.add(new Entity(bestEntity.net));
+                bestEntity.reproduce(1);
+                bestEntity.reproduce(1);
+                bestEntity.reproduce(1);
+                bestEntity.reproduce(1);
+                bestEntity.reproduce(1);
             }
             
             tickMap();
@@ -81,14 +105,11 @@ public class App {
                 App.map[entity.x][entity.y].food += 20;
                 App.entityCount--;
                 App.entities.remove(i);
-            }// else if (entity.food > 130) {
-                //entity.reproduce(1);
-            //}
-            //} else if (entities.get(i).age >= 200) {
-                //App.map[entities.get(i).x][entities.get(i).y].food += 20;
-                //App.entityCount--;
-                //App.entities.remove(i);
-            //}
+            }
+            if (bestEntity.age < entity.age && bestEntity.children < entity.children) {
+                bestEntity = new Entity(entity.net);
+                entityCount--;
+            }
         }
     }
 

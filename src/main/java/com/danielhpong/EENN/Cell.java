@@ -8,7 +8,7 @@ public class Cell {
     int food;
 
     public Cell() {
-        food = rand.nextInt(50);
+        food = rand.nextInt(100);
     }
 
     public void tick() {

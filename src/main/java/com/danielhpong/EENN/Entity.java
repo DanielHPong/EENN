@@ -14,6 +14,7 @@ public class Entity {
     int age = 0;
     int geneology;
     int generation = 0;
+    int children = 0;
 
     public Entity(ArrayList<Double> sigTable, int geneology) {
         id = UUID.randomUUID();
@@ -83,9 +84,9 @@ public class Entity {
                 }
                 break;
             case 5: // FARM
-                if (App.map[x][y].food >= 15) {
-                    App.map[x][y].food -= 15;
-                    food += 15;
+                if (App.map[x][y].food >= 20) {
+                    App.map[x][y].food -= 20;
+                    food += 20;
                 }
                 System.out.print("F");
                 break;
@@ -111,7 +112,7 @@ public class Entity {
     private Entity createChild(int gen) {
         Entity child = new Entity(App.sigTable, geneology);
         child.net = new NeuralNet(this.net, 0.25, 0.05);
-        child.food = 30;
+        child.food = 50;
         child.x = this.x;
         child.y = this.y;
         child.generation = gen;
@@ -128,6 +129,7 @@ public class Entity {
         child.y = rand.nextInt(128);
         App.entities.add(child);
         this.food = this.food - 30;
+        this.children++;
     }
     
     public FoodDirectionObject detectFood(int direction) {
