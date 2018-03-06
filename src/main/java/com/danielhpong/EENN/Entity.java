@@ -19,8 +19,7 @@ public class Entity {
     public Entity(ArrayList<Double> sigTable, int geneology) {
         id = UUID.randomUUID();
         App.entityCount++;
-        net = new NeuralNet(sigTable, rand.nextInt(28)+1, rand.nextInt(28)+1);
-        //net = new NeuralNet(sigTable, 14, 7);
+        net = new NeuralNet(sigTable, 0, 8);
         this.geneology = geneology;
         x = rand.nextInt(128);
         y = rand.nextInt(128);
@@ -58,6 +57,7 @@ public class Entity {
         FoodDirectionObject wfood = detectFood(3);
         int decision = net.run(x, y, food, App.map[x][y].food, 
                 nfood, efood, sfood, wfood);
+        System.out.print(String.valueOf(net.HIDDEN_LAYER_DEPTH) + " ");
         switch (decision) {
             case 1: // GO NORTH
                 System.out.print("N");
@@ -111,7 +111,7 @@ public class Entity {
     
     private Entity createChild(int gen) {
         Entity child = new Entity(App.sigTable, geneology);
-        child.net = new NeuralNet(this.net, 0.25, 0.05);
+        child.net = new NeuralNet(this.net, 0.5, 0.05);
         child.food = 50;
         child.x = this.x;
         child.y = this.y;

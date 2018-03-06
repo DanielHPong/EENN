@@ -49,14 +49,16 @@ public class NeuralNet {
                 if (rand.nextInt(2) == 1) {
                     for (int k = 0; k < layers[i][j].weights.length; k++) {
                         if (rand.nextInt(2) == 1) {
-                            layers[i][j].weights[k] += (rand.nextDouble()-0.5)*mutationFactor;
                             if (rand.nextInt(101) <= 100*mutationChance) {
+                                layers[i][j].weights[k] += 2*(rand.nextDouble()-0.5)*mutationFactor;
                                 int choice = rand.nextInt(2);
                                 if (choice == 0) {
                                     layers[i][j].type = "sigmoid";
                                 } else if (choice == 1) {
                                     layers[i][j].type = "linear";
                                 }
+                            } else {
+                                layers[i][j].weights[k] += (rand.nextDouble()-0.5)*mutationFactor;
                             }
                         }
                     }
@@ -189,9 +191,9 @@ public class NeuralNet {
         for (int i = 1; i <= HIDDEN_LAYER_DEPTH+1; i++) {
             for (int j = 0; j < layers[i].length; j++) {
                 layers[i][j].calculateValue();
-                System.out.print(String.valueOf(layers[i][j].value) + " ");
+                //System.out.print(String.valueOf(layers[i][j].value) + " ");
             }
-            System.out.println("");
+            //System.out.println("");
         }
         /*for (int j = 0; j < layers[layers.length-1].length; j++) {
             layers[layers.length-1][j].calculateValue();

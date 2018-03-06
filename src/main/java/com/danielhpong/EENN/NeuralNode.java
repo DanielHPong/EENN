@@ -21,7 +21,12 @@ public class NeuralNode {
             weights[i] = (rand.nextDouble()-0.5)*(64/LAYER_WIDTH);
         }
         bias = (rand.nextDouble()-0.5)*LAYER_WIDTH;
-        type = "sigmoid";
+        int choice = rand.nextInt(2);
+        if (choice == 0) {
+            type = "sigmoid";
+        } else if (choice == 1) {
+            type = "linear";
+        }
     }
     
     public NeuralNode(ArrayList<Double> sigTable, NeuralNode[] parents, double[] weights, double bias, String type) {

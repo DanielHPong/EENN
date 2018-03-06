@@ -22,40 +22,45 @@ public class App {
     public static void main( String[] args ) throws IOException {
         entityCount = 0;
         while (true) {
-            /*while (time < 2000 && entityCount < 1) {
-                if (bestEntity != null) {
-                    App.entities.add(new Entity(bestEntity.net));
-                } else {
-                    //App.entities.add(new Entity(sigTable, geneology++));
-                    App.entities.add(new Entity(new NeuralNet(sigTable, "1")));
-                }
-            }*/
             if (time < 500) {
-                App.entities.add(new Entity(new NeuralNet(sigTable, "1")));
-            } else if (time < 1000 && entityCount < 40) {
+                App.entities.add(new Entity(sigTable, geneology++));
+                //App.entities.add(new Entity(new NeuralNet(sigTable, "1")));
+            } else if (time < 1000 && time % 2 == 0) {
+                App.entities.add(new Entity(sigTable, geneology++));
+                //App.entities.add(new Entity(new NeuralNet(sigTable, "1")));
+            } else if (time < 1500 && entityCount < 100) {
                 if (bestEntity != null) {
-                    if (rand.nextInt(2) == 0) {
+                    int choice = rand.nextInt(2);
+                    if (choice == 0) {
                         App.entities.add(new Entity(bestEntity.net));
+                    } else if (choice == 1) {
+                        App.entities.add(new Entity(sigTable, geneology++));
+                        //App.entities.add(new Entity(new NeuralNet(sigTable, "1")));
                     } else {
-                        App.entities.add(new Entity(new NeuralNet(sigTable, "1")));
+                        App.entities.add(new Entity(sigTable, geneology++));
                     }
                 } else {
-                    App.entities.add(new Entity(new NeuralNet(sigTable, "1")));
+                    int choice = rand.nextInt(2);
+                    if (choice == 0) {
+                        App.entities.add(new Entity(sigTable, geneology++));
+                        //App.entities.add(new Entity(new NeuralNet(sigTable, "1")));
+                    } else {
+                        App.entities.add(new Entity(sigTable, geneology++));
+                    }
                 }
-            } else if (time < 2000 && entityCount < 20) {
+            } else if (time < 2000 && entityCount < 50) {
                 App.entities.add(new Entity(bestEntity.net));
             }
             if (time % 500 == 0) {
-                App.entities.add(new Entity(bestEntity.net));
-                App.entities.add(new Entity(bestEntity.net));
-                App.entities.add(new Entity(bestEntity.net));
-                App.entities.add(new Entity(bestEntity.net));
-                App.entities.add(new Entity(bestEntity.net));
-                bestEntity.reproduce(1);
-                bestEntity.reproduce(1);
-                bestEntity.reproduce(1);
-                bestEntity.reproduce(1);
-                bestEntity.reproduce(1);
+                for (int i = 0; i < 5; i++) {
+                    App.entities.add(new Entity(bestEntity.net));
+                    bestEntity.reproduce(1);
+                }
+            }
+            if (time % 100 == 0) {
+                for (int i = 0; i < 10; i++) {
+                    App.entities.add(new Entity(sigTable, geneology++));
+                }
             }
             
             tickMap();
@@ -106,7 +111,12 @@ public class App {
                 App.entityCount--;
                 App.entities.remove(i);
             }
-            if (bestEntity.age < entity.age && bestEntity.children < entity.children) {
+            if (entity.age > (entity.children+1)*500) {
+                App.map[entity.x][entity.y].food += 20;
+                App.entityCount--;
+                App.entities.remove(i);
+            }
+            if (bestEntity.age+(0.2*bestEntity.age*bestEntity.children) < entity.age+(0.2*entity.age*entity.children)) {
                 bestEntity = new Entity(entity.net);
                 entityCount--;
             }
