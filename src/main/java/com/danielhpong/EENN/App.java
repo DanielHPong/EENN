@@ -58,6 +58,7 @@ public class App {
                 for (int i = 0; i < 5; i++) {
                     App.entities.add(new Entity(bestEntity.net));
                     bestEntity.reproduce(1);
+                    bestEntity.children--;
                 }
             }
             if (time % 100 == 0) {
@@ -66,10 +67,10 @@ public class App {
                 }
             }
             if (time >= 3000 & entityCount < 100) {
+                toFile(bestEntity, generations++);
                 map = initializeMap();
                 entities = new ArrayList<Entity>();
                 geneology = 0;
-                toFile(bestEntity, generations++);
                 bestEntity = new Entity(sigTable, geneology++);
                 entityCount = 0;
                 time = 0;
@@ -129,8 +130,10 @@ public class App {
                 App.entities.remove(i);
             }
             if (bestEntity.age+(0.2*bestEntity.age*bestEntity.children) < entity.age+(0.2*entity.age*entity.children)) {
-                bestEntity = new Entity(entity.net);
-                entityCount--;
+                bestEntity = new Entity(entity);
+                bestEntity.x = rand.nextInt(128);
+                bestEntity.y = rand.nextInt(128);
+                bestEntity.food = 100;
             }
         }
     }
@@ -143,6 +146,7 @@ public class App {
                 for (int i = 0; i < node.weights.length; i++) {
                     str += "w[" + i + "]=" + String.valueOf(node.weights[i]) + "; ";
                 }
+                str += "bias:" + String.valueOf(node.bias) + " type:" + node.type;
                 str += "\n";
             }
             str += "\n";

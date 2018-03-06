@@ -15,11 +15,24 @@ public class Entity {
     int geneology;
     int generation = 0;
     int children = 0;
+    
+    public Entity(Entity original) {
+        this.id = UUID.randomUUID();
+        this.rand = original.rand;
+        this.net = original.net;
+        this.x = original.x;
+        this.y = original.y;
+        this.food = original.food;
+        this.age = original.age;
+        this.geneology = original.geneology;
+        this.generation = original.generation;
+        this.children = original.children;
+    }
 
     public Entity(ArrayList<Double> sigTable, int geneology) {
         id = UUID.randomUUID();
         App.entityCount++;
-        net = new NeuralNet(sigTable, 0, 8);
+        net = new NeuralNet(sigTable, rand.nextInt(3), 8);
         this.geneology = geneology;
         x = rand.nextInt(128);
         y = rand.nextInt(128);
