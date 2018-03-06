@@ -1,5 +1,7 @@
 package com.danielhpong.EENN;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -12,6 +14,7 @@ public class App {
 
     static Random rand = new Random();
     static ArrayList<Double> sigTable = generateSigTable();
+    static int generations = 1;
     public static Cell[][] map = initializeMap();
     public static ArrayList<Entity> entities = new ArrayList<Entity>();
     static int entityCount = 0;
@@ -62,11 +65,20 @@ public class App {
                     App.entities.add(new Entity(sigTable, geneology++));
                 }
             }
+            if (time >= 3000 & entityCount < 100) {
+                map = initializeMap();
+                entities = new ArrayList<Entity>();
+                geneology = 0;
+                toFile(bestEntity, generations++);
+                bestEntity = new Entity(sigTable, geneology++);
+                entityCount = 0;
+                time = 0;
+            }
             
             tickMap();
             tickEntities();
             try {
-                Thread.sleep(50);
+                Thread.sleep(25);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -120,6 +132,26 @@ public class App {
                 bestEntity = new Entity(entity.net);
                 entityCount--;
             }
+        }
+    }
+    
+    private static void toFile(Entity entity, int generation) {
+        String path = "out/log.txt";
+        String str = String.valueOf(generation) + " age:" + String.valueOf(entity.age) + " children:" + String.valueOf(entity.children) + " food:" + String.valueOf(entity.food) + "\n";
+        for (int j = 1; j < entity.net.layers.length; j++) {
+            for (NeuralNode node : entity.net.layers[j]) {
+                for (int i = 0; i < node.weights.length; i++) {
+                    str += "w[" + i + "]=" + String.valueOf(node.weights[i]) + "; ";
+                }
+                str += "\n";
+            }
+            str += "\n";
+        }
+        str += "\n";
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))) {
+            bw.write(str);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
