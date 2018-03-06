@@ -18,8 +18,8 @@ public class Entity {
     public Entity(ArrayList<Double> sigTable, int geneology) {
         id = UUID.randomUUID();
         App.entityCount++;
-        //net = new NeuralNet(sigTable, rand.nextInt(14), rand.nextInt(14));
-        net = new NeuralNet(sigTable, 21, 7);
+        net = new NeuralNet(sigTable, rand.nextInt(28)+1, rand.nextInt(28)+1);
+        //net = new NeuralNet(sigTable, 14, 7);
         this.geneology = geneology;
         x = rand.nextInt(128);
         y = rand.nextInt(128);
@@ -38,6 +38,14 @@ public class Entity {
             return false;
         }
         return true;
+    }
+    
+    public Entity(NeuralNet net) {
+        id = UUID.randomUUID();
+        App.entityCount++;
+        this.net = net;
+        x = rand.nextInt(128);
+        y = rand.nextInt(128);
     }
     
     public void tick() {
@@ -96,12 +104,13 @@ public class Entity {
         }
         System.out.print("(" + String.valueOf(nfood.food) + "," + String.valueOf(efood.food) + "," + String.valueOf(sfood.food) + "," + String.valueOf(wfood.food) + ")");
         System.out.print(" - " + age + " - " + String.valueOf(x) + ", " + String.valueOf(y) + " : " + String.valueOf(food));
+        System.out.print(" [" + String.valueOf(App.map[x][y].food) + "]");
         System.out.println("    " + String.valueOf(geneology) + "+" + String.valueOf(generation));
     }
     
     private Entity createChild(int gen) {
         Entity child = new Entity(App.sigTable, geneology);
-        child.net = new NeuralNet(this.net, 2);
+        child.net = new NeuralNet(this.net, 0.25, 0.05);
         child.food = 30;
         child.x = this.x;
         child.y = this.y;

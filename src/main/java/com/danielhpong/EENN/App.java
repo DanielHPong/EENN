@@ -17,23 +17,27 @@ public class App {
     static int entityCount = 0;
     static int time = 0;
     static int geneology = 0;
-    //public static Entity bestEntity = new Entity(sigTable, geneology++);
+    public static Entity bestEntity = new Entity(sigTable, geneology++);
 
     public static void main( String[] args ) throws IOException {
+        entityCount = 0;
         while (true) {
-            while (entityCount < 20) {
-                /*if (bestEntity.geneology != 0) {
-                    bestEntity.reproduce(-1);
-                    map[rand.nextInt(128)][rand.nextInt(128)].entity.add(new Entity(sigTable, geneology++));
+            /*while (time < 2000 && entityCount < 1) {
+                if (bestEntity != null) {
+                    App.entities.add(new Entity(bestEntity.net));
                 } else {
-                    map[rand.nextInt(128)][rand.nextInt(128)].entity.add(new Entity(sigTable, geneology++));
-                }*/
-                App.entities.add(new Entity(sigTable, geneology++));
+                    //App.entities.add(new Entity(sigTable, geneology++));
+                    App.entities.add(new Entity(new NeuralNet(sigTable, "1")));
+                }
+            }*/
+            if (time < 1000) {
+                App.entities.add(new Entity(new NeuralNet(sigTable, "1")));
             }
+            
             tickMap();
             tickEntities();
             try {
-                Thread.sleep(20);
+                Thread.sleep(50);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -77,9 +81,9 @@ public class App {
                 App.map[entity.x][entity.y].food += 20;
                 App.entityCount--;
                 App.entities.remove(i);
-            } else if (entity.food > 130) {
-                entity.reproduce(1);
-            }
+            }// else if (entity.food > 130) {
+                //entity.reproduce(1);
+            //}
             //} else if (entities.get(i).age >= 200) {
                 //App.map[entities.get(i).x][entities.get(i).y].food += 20;
                 //App.entityCount--;

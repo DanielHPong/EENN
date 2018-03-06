@@ -7,46 +7,63 @@ public class NeuralNode {
     
     Random rand = new Random();
     ArrayList<Double> sig;
-    NeuralNode[] children;
     NeuralNode[] parents;
     double[] weights;
     double bias;
     double value;
+    String type;
     
-    public NeuralNode(ArrayList<Double> sigTable, NeuralNode[] children, int LAYER_WIDTH) {
+    public NeuralNode(ArrayList<Double> sigTable, NeuralNode[] parents, int LAYER_WIDTH) {
         sig = sigTable;
-        this.children = children;
-        weights = new double[children.length];
+        this.parents = parents;
+        weights = new double[parents.length];
         for (int i = 0; i < weights.length; i++) {
             weights[i] = (rand.nextDouble()-0.5)*(64/LAYER_WIDTH);
         }
-        bias = rand.nextDouble()*LAYER_WIDTH;
+        bias = (rand.nextDouble()-0.5)*LAYER_WIDTH;
+        type = "sigmoid";
+    }
+    
+    public NeuralNode(ArrayList<Double> sigTable, NeuralNode[] parents, double[] weights, double bias, String type) {
+        this.sig = sigTable;
+        this.parents = parents;
+        this.weights = weights;
+        this.bias = bias;
+        this.type = type;
     }
     
     public void calculateValue() {
-        double childrenValue = 0;
-        for (int i = 0; i < children.length; i++) {
-            childrenValue += children[i].value*weights[i];
+        double parentValue = 0;
+        for (int i = 0; i < parents.length; i++) {
+            parentValue += parents[i].value*weights[i];
         }
-        childrenValue += bias;
-        this.value = sigmoid(childrenValue);
+        parentValue += bias;
+        if (this.type.equalsIgnoreCase("sigmoid")) {
+            this.value = sigmoid(parentValue);
+        } else if (this.type.equalsIgnoreCase("linear")) {
+            this.value = linear(parentValue);
+        }
     }
 
     public double sigmoid(double x1) {
         double x = x1 + 64;
         int low = (int) Math.floor(x);
         int high = (int) Math.ceil(x);
-        if (high == low) {
-            return sig.get((int) x);
-        } else if (high >= 128) {
+        if (high >= 128) {
             return 1.0;
         } else if (low < 0) {
             return 0.0;
+        } else if (high == low) {
+            return sig.get((int) x);
         } else {
             return sig.get(low)
                     + ((sig.get(high) - sig.get(low)) / (high - low)
                             *(x - low));
         }
+    }
+    
+    public double linear(double x1) {
+        return x1;
     }
     
 }
