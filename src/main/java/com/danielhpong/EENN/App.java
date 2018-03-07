@@ -22,59 +22,61 @@ public class App {
     static int geneology = 0;
     public static Entity bestEntity = new Entity(sigTable, geneology++);
 
-    public static void main( String[] args ) throws IOException {
-        entityCount = 0;
-        while (true) {
-            if (time < 500) {
-                App.entities.add(new Entity(sigTable, geneology++));
-                //App.entities.add(new Entity(new NeuralNet(sigTable, "1")));
-            } else if (time < 1000 && time % 2 == 0) {
-                App.entities.add(new Entity(sigTable, geneology++));
-                //App.entities.add(new Entity(new NeuralNet(sigTable, "1")));
-            } else if (time < 1500 && entityCount < 100) {
-                if (bestEntity != null) {
-                    int choice = rand.nextInt(2);
-                    if (choice == 0) {
-                        App.entities.add(new Entity(bestEntity.net));
-                    } else if (choice == 1) {
-                        App.entities.add(new Entity(sigTable, geneology++));
-                        //App.entities.add(new Entity(new NeuralNet(sigTable, "1")));
-                    } else {
-                        App.entities.add(new Entity(sigTable, geneology++));
-                    }
-                } else {
-                    int choice = rand.nextInt(2);
-                    if (choice == 0) {
-                        App.entities.add(new Entity(sigTable, geneology++));
-                        //App.entities.add(new Entity(new NeuralNet(sigTable, "1")));
-                    } else {
-                        App.entities.add(new Entity(sigTable, geneology++));
-                    }
-                }
-            } else if (time < 2000 && entityCount < 50) {
-                App.entities.add(new Entity(bestEntity.net));
-            }
-            if (time % 500 == 0) {
-                for (int i = 0; i < 5; i++) {
+    private static void prepareEntities(String type) {
+        if (time < 500) {
+            //App.entities.add(new Entity(sigTable, geneology++));
+            App.entities.add(new Entity(new NeuralNet(sigTable, type)));
+        } else if (time < 1000 && time % 2 == 0) {
+            //App.entities.add(new Entity(sigTable, geneology++));
+            App.entities.add(new Entity(new NeuralNet(sigTable, type)));
+        } else if (time < 1500 && entityCount < 100) {
+            if (bestEntity != null) {
+                if (rand.nextInt(2) == 0) {
                     App.entities.add(new Entity(bestEntity.net));
-                    bestEntity.reproduce(1);
-                    bestEntity.children--;
+                } else {
+                    //App.entities.add(new Entity(sigTable, geneology++));
+                    App.entities.add(new Entity(new NeuralNet(sigTable, type)));
                 }
-            }
-            if (time % 100 == 0) {
-                for (int i = 0; i < 10; i++) {
+            } else {
+                int choice = rand.nextInt(2);
+                if (choice == 0) {
+                    //App.entities.add(new Entity(sigTable, geneology++));
+                    App.entities.add(new Entity(new NeuralNet(sigTable, type)));
+                } else {
                     App.entities.add(new Entity(sigTable, geneology++));
                 }
             }
-            if (time >= 3000 & entityCount < 100) {
-                toFile(bestEntity, generations++);
-                map = initializeMap();
-                entities = new ArrayList<Entity>();
-                geneology = 0;
-                bestEntity = new Entity(sigTable, geneology++);
-                entityCount = 0;
-                time = 0;
+        } else if (time < 2000 && entityCount < 50) {
+            App.entities.add(new Entity(bestEntity.net));
+        }
+        if (time % 500 == 0) {
+            for (int i = 0; i < 5; i++) {
+                App.entities.add(new Entity(bestEntity.net));
+                bestEntity.reproduce(1);
+                bestEntity.children--;
             }
+        }
+        if (time % 100 == 0) {
+            for (int i = 0; i < 10; i++) {
+                //App.entities.add(new Entity(sigTable, geneology++));
+                App.entities.add(new Entity(new NeuralNet(sigTable, type)));
+            }
+        }
+        if (time >= 3000 & entityCount < 100) {
+            toFile(bestEntity, generations++);
+            map = initializeMap();
+            entities = new ArrayList<Entity>();
+            geneology = 0;
+            bestEntity = new Entity(sigTable, geneology++);
+            entityCount = 0;
+            time = 0;
+        }
+    }
+    
+    public static void main( String[] args ) throws IOException {
+        entityCount = 0;
+        while (true) {
+            prepareEntities("3");
             
             tickMap();
             tickEntities();
