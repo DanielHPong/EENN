@@ -50,7 +50,7 @@ public class NeuralNet {
                     for (int k = 0; k < layers[i][j].weights.length; k++) {
                         if (rand.nextInt(2) == 1) {
                             if (rand.nextInt(101) <= 100*mutationChance) {
-                                layers[i][j].weights[k] += 2*(rand.nextDouble()-0.5)*mutationFactor;
+                                layers[i][j].weights[k] += (rand.nextDouble()-0.5)*mutationFactor;
                                 int choice = rand.nextInt(2);
                                 if (choice == 0) {
                                     layers[i][j].type = "sigmoid";
@@ -80,12 +80,12 @@ public class NeuralNet {
                 if (rand.nextInt(2) == 1) {
                     for (int k = 0; k < newLayers[HIDDEN_LAYER_DEPTH][i].weights.length; k++) {
                         if (rand.nextInt(2) == 1) {
-                            newLayers[HIDDEN_LAYER_DEPTH][i].weights[k] += (rand.nextDouble()-0.5)*mutationFactor;
+                            newLayers[HIDDEN_LAYER_DEPTH][i].weights[k] += 2*(rand.nextDouble()-0.5)*mutationFactor;
                         }
                     }
                 }
                 if (rand.nextInt(2) == 1) {
-                    newLayers[HIDDEN_LAYER_DEPTH][i].bias += (rand.nextDouble()-0.5)*mutationFactor;
+                    newLayers[HIDDEN_LAYER_DEPTH][i].bias += 2*(rand.nextDouble()-0.5)*mutationFactor;
                 }
             }
             newLayers[HIDDEN_LAYER_DEPTH+1] = layers[HIDDEN_LAYER_DEPTH];
