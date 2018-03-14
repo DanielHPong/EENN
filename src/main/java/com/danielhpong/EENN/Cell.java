@@ -17,6 +17,9 @@ public class Cell {
                 food = food+1;
             }
         }
+        if (food < 0) {
+            food = 0;
+        }
     }
 
 }

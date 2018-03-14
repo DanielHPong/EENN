@@ -97,10 +97,9 @@ public class Entity {
                 }
                 break;
             case 5: // FARM
-                if (App.map[x][y].food >= 20) {
-                    App.map[x][y].food -= 20;
-                    food += 20;
-                }
+                int farmVal = App.map[x][y].food/2;
+                App.map[x][y].food -= farmVal;
+                food += farmVal;
                 System.out.print("F");
                 break;
             case 6: // RAID
