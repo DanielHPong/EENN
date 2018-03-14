@@ -80,11 +80,11 @@ public class App {
             
             tickMap();
             tickEntities();
-            try {
-                Thread.sleep(25);
+            /*try {
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+            }*/
             time++;
             System.out.println(" ");
             System.out.println(String.valueOf(time) + " : " + String.valueOf(entityCount));

@@ -188,19 +188,26 @@ public class NeuralNet {
             double[] w = new double[8]; for (int i = 0; i < w.length; i++) { w[i] = 0.0; }
             NeuralNode[] output = new NeuralNode[OUTPUT_SIZE];
             
-            output[0] = new NeuralNode(sig, layers[0], w, 3.014716466377953, "sigmoid");
+            w[0]=1.4797114962749083; w[1]=0.5622796647586965; w[2]=0.5567927622154674; w[3]=-0.20334821409937198; w[4]=-1.61934326915859; w[5]=-5.098752932370131;
+            output[0] = new NeuralNode(sig, layers[0], w, -1.2108682641018682, "linear");
             
-            output[1] = new NeuralNode(sig, layers[0], w, -4.237062295693943, "sigmoid");
+            w[0]=4.589707187227614; w[1]=-4.155403561235169; w[2]=-3.0600206900324; w[3]=-2.9744451275269816; w[4]=-2.33940485663701; w[5]=2.0437561245410705;
+            output[1] = new NeuralNode(sig, layers[0], w, 0.8594136421670034, "sigmoid");
             
-            output[2] = new NeuralNode(sig, layers[0], w, -1.0606049911263755, "sigmoid");
+            w[0]=2.657583513595645; w[1]=1.5746500899463785; w[2]=-3.3868412244212722; w[3]=-3.3384158258121124; w[4]=3.3506806791345642; w[5]=-2.690185713719373;
+            output[2] = new NeuralNode(sig, layers[0], w, -4.591962182897939, "sigmoid");
             
-            output[3] = new NeuralNode(sig, layers[0], w, -3.4701365200726895, "linear");
+            w[0]=-1.4334719228333839; w[1]=-5.409089475079917; w[2]=-2.792674472425941; w[3]=3.8675091001711674; w[4]=3.3408975861119656; w[5]=2.5771423062726897;
+            output[3] = new NeuralNode(sig, layers[0], w, -0.7809008499488663, "linear");
             
-            output[4] = new NeuralNode(sig, layers[0], w, 3.6771857525862766, "sigmoid");
+            w[0]=3.698498846698975; w[1]=3.4107350012327835; w[2]=-0.902961044373252; w[3]=-0.3832313820573464; w[4]=-2.3120003841227534; w[5]=-3.631527406173725;
+            output[4] = new NeuralNode(sig, layers[0], w, 1.784423058504056, "linear");
             
-            output[5] = new NeuralNode(sig, layers[0], w, -0.19050619459145007, "linear");
+            w[0]=1.1282471203035003; w[1]=4.669487674382495; w[2]=-0.8460328151272064; w[3]=3.1951857851055583; w[4]=-4.475147576855759; w[5]=-3.916517137622468;
+            output[5] = new NeuralNode(sig, layers[0], w, -4.82245549533798, "sigmoid");
             
-            output[6] = new NeuralNode(sig, layers[0], w, 0.33550678107182325, "sigmoid");
+            w[0]=3.3392213118942564; w[1]=-2.859084578590136; w[2]=0.9733220572198829; w[3]=2.062672445518953; w[4]=-3.0000022569126155; w[5]=-3.4250222976605276;
+            output[6] = new NeuralNode(sig, layers[0], w, -2.800232129554234, "sigmoid");
             
             layers[HIDDEN_LAYER_DEPTH+1] = output;
         }

@@ -32,7 +32,7 @@ public class Entity {
     public Entity(ArrayList<Double> sigTable, int geneology) {
         id = UUID.randomUUID();
         App.entityCount++;
-        net = new NeuralNet(sigTable, rand.nextInt(3), 8);
+        net = new NeuralNet(sigTable, rand.nextInt(3), rand.nextInt(2)+6);
         this.geneology = geneology;
         x = rand.nextInt(128);
         y = rand.nextInt(128);
